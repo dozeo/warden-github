@@ -1,6 +1,5 @@
 require 'warden'
 require 'oauth2'
-require 'yajl'
 
 module Warden
   module Github

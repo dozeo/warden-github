@@ -1,4 +1,4 @@
-require 'yajl'
+require 'multi_json'
 require 'octokit'
 require 'rest-client'
 
@@ -84,7 +84,7 @@ module Warden
         def post(path, params)
           headers = {:Authorization => "token #{token}", :content_type => :json, :accept => :json}
           res = RestClient.post("#{github_api_uri}/#{path}", params.to_json, headers)
-          Yajl.load(res)
+          MultiJson.load(res)
         end
 
         # Send a V3 API PUT request to path and parses the response body
@@ -95,7 +95,7 @@ module Warden
         def put(path, params)
           headers = {:Authorization => "token #{token}", :content_type => :json, :accept => :json}
           res = RestClient.put("#{github_api_uri}/#{path}", params.to_json, headers)
-          Yajl.load(res)
+          MultiJson.load(res)
         end
 
         # Send a V3 API DELETE request to path and parses the response body
@@ -106,7 +106,7 @@ module Warden
         def delete(path, params)
           headers = {:Authorization => "token #{token}", :content_type => :json, :accept => :json}
           res = RestClient.delete("#{github_api_uri}/#{path}", params.to_json, headers)
-          Yajl.load(res)
+          MultiJson.load(res)
         end
 
         # Access the GitHub API from Octokit
@@ -133,7 +133,7 @@ module Warden
         #   github_request("/user/repos", {:page => 2})
         #   # => [ { 'name' => 'gollum' ... } ]
         def github_request(path, params = {})
-          Yajl.load(github_raw_request(path, params))
+          MultiJson.load(github_raw_request(path, params))
         end
 
         # Send a V3 API GET request to path

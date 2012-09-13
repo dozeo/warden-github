@@ -13,7 +13,7 @@ Warden::Strategies.add(:github) do
       begin
         api = api_for(params['code'])
 
-        success!(Warden::Github::Oauth::User.new(Yajl.load(user_info_for(api.token)), api.token))
+        success!(Warden::Github::Oauth::User.new(MultiJson.load(user_info_for(api.token)), api.token))
       rescue OAuth2::Error
         %(<p>Outdated ?code=#{params['code']}:</p><p>#{$!}</p><p><a href="/auth/github">Retry</a></p>)
       end
